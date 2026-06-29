@@ -1,0 +1,7 @@
+{
+  "name": "GALIAWA CODE",
+  "description": "A simple code converter app that converts between numbers and alphanumeric codes",
+  "version": "1.0",
+  "author": "GAILAN ABDULLA",
+  "bundleIdentifier": "com.galiawa.code"
+}
