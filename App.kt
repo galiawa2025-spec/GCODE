@@ -172,12 +172,21 @@ fun convertNumberToStringCode(n: Long): String {
     return "$group$char"
 }
 
-// لۆژیکی گۆڕینی دەق بۆ ژمارە
+// لۆژیکی گۆڕینی دەق بۆ ژمارە - چارەسەرکراو
 fun convertStringCodeToNumber(code: String): Long? {
-    val regex = """^(\d+)([A-Z])$""".toRegex()
-    val match = regex.find(code.uppercase()) ?: return null
-    val group = match.groupValues[1].toLongOrNull() ?: return null
-    val char = match.groupValues[2][0]
-    val charValue = (char.codeUnitAt(0) - 'A'.codeUnitAt(0) + 1).toLong()
+    if (code.isEmpty()) return null
+    
+    // دوایین کاراکتەر لیتر دەبێت (A-Z)
+    val lastChar = code.last()
+    if (lastChar !in 'A'..'Z') return null
+    
+    // بقیی بەشی دەبێت ژمارە (digits)
+    val numberPart = code.dropLast(1)
+    if (numberPart.isEmpty() || !numberPart.all { it.isDigit() }) return null
+    
+    val group = numberPart.toLongOrNull() ?: return null
+    if (group <= 0) return null
+    
+    val charValue = (lastChar - 'A' + 1).toLong()
     return (group - 1) * 26 + charValue
 }
